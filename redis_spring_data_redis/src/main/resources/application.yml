@@ -1,0 +1,16 @@
+spring:
+  redis:
+    host: 172.20.10.4
+#    host: 192.168.0.105
+    port: 6379
+#    username: xbw  注意!
+#    注意这里的账户名，工厂模式的话用xbw（centos的用户名）是可以的，但redis的用户名默认是default（我们没改过），所以用default也是可以的
+#    但springDataRedis中的配置文件username是不能用xbw的，只能写default或不写直接默认default
+    username: default
+    password: 12345678
+    lettuce:
+      pool:
+        max-active: 8  #最大连接数
+        max-idle: 8   #最大空闲连接数
+        min-idle: 0   #最小空闲连接数
+        max-wait: -1 #连接等待时间

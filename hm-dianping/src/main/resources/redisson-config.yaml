@@ -1,0 +1,4 @@
+#Redisson配置
+singleServerConfig:
+  address: redis://172.20.10.4:6379
+  password: 12345678
