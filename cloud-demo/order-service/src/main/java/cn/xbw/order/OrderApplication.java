@@ -28,4 +28,17 @@ public class OrderApplication {
         return new RestTemplate();
     }
 
+
+    /**
+     * 自定义负载均衡策略为RandomRule随机策略，覆盖默认的ZoneAvoidanceRule
+     * 但在这里这样配置的话是全局配置的，会让order-service在调用其他任何微服务的时候都用RandomRule
+     * 如果想精确到调用具体某个微服务用不同的策略就要在application.yml里配置了
+     *
+     * @return
+     */
+    /*@Bean
+    public IRule randomRule() {
+        return new RandomRule();
+    }*/
+
 }

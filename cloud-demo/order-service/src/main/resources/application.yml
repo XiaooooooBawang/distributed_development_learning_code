@@ -8,6 +8,20 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   application:
     name: order-service # user 服务名称
+  cloud:
+    nacos:
+      server-addr: localhost:8848 # nacos 服务地址
+      discovery:
+        cluster-name: GZ # 集群名称，这样就能与同为GZ下的两个user-service实例归属同一GZ集群
+
+        # 命名空间,不同环境的分离注册表，我已在注册中心控制台添加了dev命名空间，填的是ID。
+        # 不同命名空间之间是隔离的，不同namespace的服务互相不可见，不能跨命名空间访问
+        # namespace: 3309e9e1-9406-40fb-8ff0-25fe053ce7b5
+
+#        Nacos的服务实例分为两种类型：
+#        - 临时实例：如果实例宕机超过一定时间，会从服务列表剔除，默认的类型。健康监测方式为实例向注册中心每30秒发送心跳
+#        - 非临时实例：如果实例宕机，不会从服务列表剔除，也可以叫永久实例。健康监测方式为注册中心主动询问实例的健康状况
+#        ephemeral: false # 设置为非临时实例
 
 mybatis:
   type-aliases-package: cn.xbw.user.pojo
@@ -19,7 +33,25 @@ logging:
   pattern:
     dateformat: MM-dd HH:mm:ss:SSS
 
-eureka:
-  client:
-    service-url: # eureka 地址
-      defaultZone: http://localhost:10086/eureka
+#eureka:
+#  client:
+#    service-url: # eureka 地址
+#      defaultZone: http://localhost:10086/eureka
+
+#user-service: # 给某个微服务配置负载均衡规则，这里是user-service服务，当order调用user服务时会根据这个负载均衡规则执行
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule # 负载均衡规则为RandomRule，一般用默认的就行
+
+user-service: # 给某个微服务配置负载均衡规则，这里是user-service服务，当order调用user服务时会根据这个负载均衡规则执行
+  ribbon:
+    # 负载均衡规则为NacosRule，能针对nacos中注册过的集群，
+    # order-service就能优先调用同一集群（如果同一集群的所有user服务都挂了会走外部的集群）下的user-service服务，但在同一集群下会随机调用
+    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule
+
+#Ribbon默认是采用懒加载，即第一次访问时才会去创建LoadBalanceClient，请求时间会很长。
+#而饥饿加载则会在项目启动时创建，降低第一次访问的耗时
+ribbon:
+  eager-load:
+    enabled: true #开启饥饿加载
+    clients: #指定饥饿加载的服务名
+      - user-service
