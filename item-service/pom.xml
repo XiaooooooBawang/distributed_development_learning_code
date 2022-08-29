@@ -46,6 +46,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--第三方开源的canal-starter客户端，与SpringBoot完美整合，自动装配，比官方客户端要简单好用很多-->
+        <dependency>
+            <groupId>top.javatool</groupId>
+            <artifactId>canal-spring-boot-starter</artifactId>
+            <version>1.2.1-RELEASE</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -4,10 +4,13 @@ spring:
   application:
     name: itemservice
   datasource:
-    url: jdbc:mysql://192.168.0.100:3306/xbw_db?useSSL=false
+    url: jdbc:mysql://172.20.10.4:3306/xbw_db?useSSL=false
     username: root
     password: 12345678
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 172.20.10.4
+
 mybatis-plus:
   type-aliases-package: com.xbw.item.pojo
   configuration:
@@ -21,3 +24,7 @@ logging:
     com.xbw: debug
   pattern:
     dateformat: HH:mm:ss:SSS
+
+canal:
+  destination: xbw # canal的集群名字，要与安装canal时设置的名称一致
+  server: 172.20.10.4:11111 # canal服务地址

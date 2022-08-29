@@ -68,7 +68,7 @@ public class ItemController {
 
     @GetMapping("/{id}")
     public Item findById(@PathVariable("id") Long id){
-        //先在本地缓存中差，未命中就去数据库中插
+        //先在本地缓存中查，未命中就去数据库中查
         return itemCache.get(id, key -> itemService.query()
                                         .ne("status", 3).eq("id", key)
                                         .one()
@@ -77,6 +77,7 @@ public class ItemController {
 
     @GetMapping("/stock/{id}")
     public ItemStock findStockById(@PathVariable("id") Long id){
+        //先在本地缓存中查，未命中就去数据库中查
         return stockCache.get(id, key -> stockService.getById(key));
     }
 }
