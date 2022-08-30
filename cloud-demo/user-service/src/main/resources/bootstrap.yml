@@ -1,0 +1,12 @@
+# 这里写的一些配置（如服务名，nacos地址等）在application.yml就不用写了
+spring:
+  application:
+    name: user-service # 服务名称
+  profiles:
+    active: dev #开发环境，这里是dev
+  cloud:
+    nacos:
+      server-addr: localhost:80 # Nacos地址，在Windows本地搭建了nacos集群，配置了负载均衡，直接访问80就行
+#      server-addr: localhost:8848 # Nacos地址
+      config:
+        file-extension: yaml # 文件后缀名
