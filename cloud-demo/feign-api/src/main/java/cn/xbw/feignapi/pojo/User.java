@@ -1,4 +1,4 @@
-package cn.xbw.order.pojo;
+package cn.xbw.feignapi.pojo;
 
 import lombok.Data;
 

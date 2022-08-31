@@ -10,8 +10,8 @@ spring:
     name: order-service # user 服务名称
   cloud:
     nacos:
-      server-addr: localhost:80 # Nacos地址，在Windows本地搭建了nacos集群，配置了负载均衡，直接访问80就行
-#      server-addr: localhost:8848 # nacos 服务地址
+#      server-addr: localhost:80 # Nacos地址，在Windows本地搭建了nacos集群，配置了负载均衡，直接访问80就行
+      server-addr: localhost:8848 # nacos 服务地址
       discovery:
         cluster-name: GZ # 集群名称，这样就能与同为GZ下的两个user-service实例归属同一GZ集群
 
@@ -56,3 +56,14 @@ ribbon:
     enabled: true #开启饥饿加载
     clients: #指定饥饿加载的服务名
       - user-service
+
+
+feign:
+  client:  # 在配置文件中自定义feign的配置，也可以在java代码中写
+    config:
+      default: # 这里用default就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+        loggerLevel: FULL #  日志级别
+  httpclient:  # 配置连接池
+    enabled: true # 开启feign对HttpClient的支持
+    max-connections: 200 # 最大的连接数
+    max-connections-per-route: 50 # 每个路径的最大连接数

@@ -1,5 +1,6 @@
 package cn.xbw.order.pojo;
 
+import cn.xbw.feignapi.pojo.User;
 import lombok.Data;
 
 @Data

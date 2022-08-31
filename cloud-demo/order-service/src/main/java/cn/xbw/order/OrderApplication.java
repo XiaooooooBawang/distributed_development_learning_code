@@ -1,14 +1,24 @@
 package cn.xbw.order;
 
+import cn.xbw.feignapi.clients.UserClient;
+import cn.xbw.feignapi.config.DefaultFeignConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @MapperScan("cn.xbw.order.mapper")
 @SpringBootApplication
+//在order-service的启动类添加注解开启Feign的功能,feign自定义配置全局生效
+//@EnableFeignClients(defaultConfiguration = DefaultFeignConfig.class)
+
+//UserClient现在在cn.xbw.feignapi.clients包下，而order-service的@EnableFeignClients注解是在cn.xbw.order包下，
+// 不在同一个包，无法扫描到UserClient。所以在注入的时候spring会报错
+// 指定feign需要加载的client接口，也可以@EnableFeignClients(basePackages = "cn.xbw.feignapi.clients")指定feign需要扫描的包
+@EnableFeignClients(clients = UserClient.class)
 public class OrderApplication {
 
     public static void main(String[] args) {
