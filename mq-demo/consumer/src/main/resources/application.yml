@@ -1,0 +1,14 @@
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+
+spring:
+  rabbitmq:
+    host: 192.168.0.100 # 主机名
+    port: 5672 # 端口
+    virtual-host: / # 虚拟主机
+    username: xbw # 用户名
+    password: 12345678 # 密码
+    listener:
+      simple:
+        prefetch: 1 # 消息预取，消费者每次每次预取的消息数量（默认是无穷大，平均分配），每次只能获取一条消息，处理完成才能获取下一个消息
