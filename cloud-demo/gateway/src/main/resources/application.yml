@@ -20,6 +20,7 @@ spring:
             - Path=/order/**
       default-filters: # 默认过滤器，对所有请求都有效
         - AddRequestHeader=author, XiaooooooBawang # 添加请求头
+        - AddRequestHeader=origin, gateway
       globalcors: # 全局的跨域处理
         add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
         corsConfigurations:

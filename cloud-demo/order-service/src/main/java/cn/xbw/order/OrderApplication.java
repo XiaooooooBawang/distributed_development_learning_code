@@ -16,9 +16,12 @@ import org.springframework.web.client.RestTemplate;
 //@EnableFeignClients(defaultConfiguration = DefaultFeignConfig.class)
 
 //UserClient现在在cn.xbw.feignapi.clients包下，而order-service的@EnableFeignClients注解是在cn.xbw.order包下，
-// 不在同一个包，无法扫描到UserClient。所以在注入的时候spring会报错
+// 不在同一个包，无法扫描到UserClient。所以在注入的时候spring会报错一，
 // 指定feign需要加载的client接口，也可以@EnableFeignClients(basePackages = "cn.xbw.feignapi.clients")指定feign需要扫描的包
-@EnableFeignClients(clients = UserClient.class)
+//@EnableFeignClients(clients = UserClient.class)
+
+//多了fallback，所以不能只指定client类了，同时要指定feign的配置类（我们注册了fallback的bean）
+@EnableFeignClients(basePackages = "cn.xbw.feignapi.clients", defaultConfiguration = DefaultFeignConfig.class)
 public class OrderApplication {
 
     public static void main(String[] args) {
